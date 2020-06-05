@@ -492,7 +492,119 @@ Example 2 :-
 ``` html
  <td>@item.ProductName</td>
 ```
-		
+
+## Client side validation
+
+ASP.NET MVC uses DataAnnotations attributes to implement validations. DataAnnotations includes built-in validation attributes for different validation rules, which can be applied to the properties of model class.
+
+<!-- ### Need 3 packages
+
+- jQuery
+- jQuery.Validation
+- Microsoft.jQuery.Unobtrusive.Validation -->
+
+> Step 1 :- First of all, apply DataAnnotation attribute on the properties of Student model class.
+
+``` c#
+public class Student
+{
+    [Required]
+    public string StudentName { get; set; }   
+}
+```
+
+> Step 2 :- In Post Action method  inside Controller add a condition checking ModelState.IsValid
+
+``` c#
+[HttpPost]
+public ActionResult Edit(Student std)
+{
+    if (ModelState.IsValid) { 
+    
+        //write code to update student 
+    
+        return RedirectToAction("Index");
+    }
+    
+    return View();
+}
+```
+
+> Step 3 :- In View add a validation message using HTML Helper
+
+``` c#
+ @Html.ValidationMessageFor(model => model.StudentName, "", new { @class = "text-danger" })
+```
+
+### Custom error message
+
+Use the ErrorMessage parameter of the DataAnnotation attributes to provide your own custom error message as shown below.
+
+``` c#
+public class Student
+{
+    [Required(ErrorMessage="Please enter student name.")]
+    public string StudentName { get; set; }
+}
+```
+
+Also, you can specify a message as a second parameter in the ValidationMessage() method as shown below.
+
+``` c#
+@Html.ValidationMessageFor(m => m.StudentName, "Please enter student name.", new { @class = "text-danger" })
+```
+
+### Validatio summary
+
+The ValidationSummary can be used to display all the error messages for all the fields.
+It can also be used to display custom error messages.
+
+>  ValidationSummary should be inside the form.
+
+``` c#
+@Html.ValidationSummary()
+```
+
+
+For more [click here](https://www.tutorialsteacher.com/mvc/implement-validation-in-asp.net-mvc).
+
+## ASPNET Identity
+
+- ASPNET Identity is a framework to store and manage user accounts in web application.
+- It has four major component / packages.
+
+ 1. Microsoft.AspNet.Identity.Core
+
+ 2. Microsoft.AspNet.Identity.EntityFramework
+
+ 3. Microsoft.AspNet.Identity.Owin
+
+ 4. Microsoft.Owin.Host.SystemWeb
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ⚠️ Work In Progress ⚠️
